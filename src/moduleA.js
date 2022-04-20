@@ -1,1 +1,1 @@
-export const moduleA = 'moduleA';
+export const moduleA = 'moduleB is changed!';
