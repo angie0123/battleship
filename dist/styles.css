@@ -62,3 +62,7 @@ body {
 .ship {
   background-color: grey;
 }
+
+.ship-possible {
+  background-color: grey;
+}

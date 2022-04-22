@@ -46,9 +46,6 @@ export const view = () => {
         square.addEventListener('mouseenter', () => {
           handlers.handleCheckPlacement(j, i);
         });
-        square.addEventListener('mouseleave', () => {
-          square.classList.add('ship');
-        });
         row.append(square);
       }
       board.append(row);
@@ -57,10 +54,14 @@ export const view = () => {
   };
 
   const highlightShip = (length, x, y) => {
-    console.log(length, x, y);
+    const prevHighlights = document.querySelectorAll('.ship-possible');
+    [...prevHighlights].map((possibleShip) =>
+      possibleShip.classList.remove('ship-possible')
+    );
+    console.log(prevHighlights);
     const row = document.querySelectorAll('.row')[y];
     for (let i = 0; i < length; i++) {
-      row.childNodes[x + i].classList.add('ship');
+      row.childNodes[x + i].classList.add('ship-possible');
     }
   };
 
