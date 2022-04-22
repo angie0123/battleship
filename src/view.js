@@ -15,17 +15,33 @@ export const view = () => {
     status.textContent = 'Place your ships';
 
     const boardsContainer = createElement('div', 'boards-container');
-    const playerBoard = createElement('div', 'player-board');
+    const playerBoardContainer = createElement('div', 'board-container');
     const playerName = createElement('div', 'player-name');
+    const playerBoard = createBoard();
     playerName.textContent = 'Player';
-    playerBoard.append(playerName);
-    const computerBoard = createElement('div', 'computer-board');
+    playerBoardContainer.append(playerBoard, playerName);
+    const computerBoardContainer = createElement('div', 'board-container');
     const computerName = createElement('div', 'player-name');
+    const computerBoard = createBoard();
     computerName.textContent = 'Computer';
-    computerBoard.append(computerName);
-    boardsContainer.append(playerBoard, computerBoard);
+    computerBoardContainer.append(computerBoard, computerName);
+    boardsContainer.append(playerBoardContainer, computerBoardContainer);
 
     document.querySelector('body').append(title, status, boardsContainer);
+  };
+
+  const createBoard = () => {
+    let board = createElement('div', 'board-grid');
+    for (let i = 0; i < 10; i++) {
+      const row = createElement('div', 'row');
+      for (let j = 0; j < 10; j++) {
+        const square = createElement('div', 'square');
+        square.textContent = `${j}, ${i}`;
+        row.append(square);
+      }
+      board.append(row);
+    }
+    return board;
   };
 
   return {
