@@ -14,13 +14,14 @@ const computer = () => {
   const randomCoord = () => Math.floor(Math.random() * 10);
   return {
     randomAttack: (gameBoard) => {
-      let x, y;
+      let x, y, key;
       do {
         x = randomCoord();
         y = randomCoord();
-      } while (alreadyPlayed.contains([x, y]));
-      alreadyPlayed.push([x, y]);
-      return gameBoard.receiveAttack(intBetween0And9, intBetween0And9);
+        key = `${x} ${y}`;
+      } while (alreadyPlayed.includes(key));
+      alreadyPlayed.push(key);
+      return gameBoard.receiveAttack(x, y);
     },
   };
 };
