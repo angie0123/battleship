@@ -58,3 +58,7 @@ body {
 .row {
   display: flex;
 }
+
+.ship {
+  background-color: grey;
+}

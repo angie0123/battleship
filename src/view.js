@@ -1,4 +1,10 @@
 export const view = () => {
+  let handlers;
+
+  const setHandlers = (handlerObj) => {
+    handlers = handlerObj;
+  };
+
   const createElement = (type, ...classNames) => {
     const el = document.createElement(type);
     for (let index in classNames) {
@@ -37,6 +43,12 @@ export const view = () => {
       for (let j = 0; j < 10; j++) {
         const square = createElement('div', 'square');
         square.textContent = `${j}, ${i}`;
+        square.addEventListener('mouseenter', () => {
+          handlers.handleCheckPlacement(j, i);
+        });
+        square.addEventListener('mouseleave', () => {
+          square.classList.add('ship');
+        });
         row.append(square);
       }
       board.append(row);
@@ -44,7 +56,17 @@ export const view = () => {
     return board;
   };
 
+  const highlightShip = (length, x, y) => {
+    console.log(length, x, y);
+    const row = document.querySelectorAll('.row')[y];
+    for (let i = 0; i < length; i++) {
+      row.childNodes[x + i].classList.add('ship');
+    }
+  };
+
   return {
     init,
+    setHandlers,
+    highlightShip,
   };
 };
