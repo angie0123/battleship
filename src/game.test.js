@@ -1,12 +1,14 @@
 import { game } from './game';
 import { gameboard } from './gameboard';
 import { player, computer } from './player';
+import { ship } from './ship';
 
 let testGame;
 let testView;
 let testBoard;
 let testPlayer;
 let testComputer;
+let testShip;
 
 describe('game API works', () => {
   beforeEach(() => {
@@ -16,28 +18,35 @@ describe('game API works', () => {
     testBoard = gameboard;
     testPlayer = player;
     testComputer = computer;
-    testGame = game(testPlayer, testComputer, testBoard, testView);
+    testShip = ship;
+    testGame = game(testPlayer, testComputer, testBoard, testShip, testView);
   });
   test('initializer calls the player', () => {
     const mockPlayer = jest.fn();
-    testGame = game(mockPlayer, testComputer, testBoard, testView);
-    testGame.init(testView);
+    testGame = game(mockPlayer, testComputer, testBoard, testShip, testView);
+    testGame.init();
     expect(mockPlayer).toHaveBeenCalled();
   });
   test('initializer calls the computer', () => {
     const mockComputer = jest.fn();
-    testGame = game(testPlayer, mockComputer, testBoard, testView);
-    testGame.init(testView);
+    testGame = game(testPlayer, mockComputer, testBoard, testShip, testView);
+    testGame.init();
     expect(mockComputer).toHaveBeenCalled();
   });
   test('initializer calls the board', () => {
     const mockBoard = jest.fn();
-    testGame = game(testPlayer, testComputer, mockBoard, testView);
-    testGame.init(testView);
+    testGame = game(testPlayer, testComputer, mockBoard, testShip, testView);
+    testGame.init();
     expect(mockBoard).toHaveBeenCalled();
   });
+  test('initializer calls the ship', () => {
+    const mockShip = jest.fn();
+    testGame = game(testPlayer, testComputer, testBoard, mockShip, testView);
+    testGame.init();
+    expect(mockShip.mock.calls.length).toBe(10);
+  });
   test('initializer calls the view', () => {
-    testGame.init(testView);
+    testGame.init();
     expect(testView.init).toHaveBeenCalled();
   });
 });
