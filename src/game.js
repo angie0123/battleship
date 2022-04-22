@@ -17,15 +17,17 @@ export const game = (player, computer, gameboard, ship, view) => {
     playerShips = [ship(2), ship(3), ship(3), ship(4), ship(5)];
     computerShips = [ship(2), ship(3), ship(3), ship(4), ship(5)];
     appView = view();
-    appView.setHandlers({ handleCheckPlacement });
+    appView.setHandlers({ handlePlacement });
     appView.init();
   };
 
-  const handleCheckPlacement = (x, y) => {
+  const handlePlacement = (x, y, temp) => {
+    if (shipPointer >= playerShips.length) return;
     const currentShip = playerShips[shipPointer];
-    if (computerTurf.isValidPosition(currentShip, x)) {
-      appView.highlightShip(currentShip.body.length, x, y);
+    if (playerTurf.isValidPosition(currentShip, x)) {
+      appView.highlightShip(currentShip.body.length, x, y, temp);
     }
+    if (!temp) shipPointer += 1;
   };
 
   return {

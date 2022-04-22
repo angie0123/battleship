@@ -44,7 +44,10 @@ export const view = () => {
         const square = createElement('div', 'square');
         square.textContent = `${j}, ${i}`;
         square.addEventListener('mouseenter', () => {
-          handlers.handleCheckPlacement(j, i);
+          handlers.handlePlacement(j, i, true);
+        });
+        square.addEventListener('click', () => {
+          handlers.handlePlacement(j, i, false);
         });
         row.append(square);
       }
@@ -53,15 +56,18 @@ export const view = () => {
     return board;
   };
 
-  const highlightShip = (length, x, y) => {
-    const prevHighlights = document.querySelectorAll('.ship-possible');
-    [...prevHighlights].map((possibleShip) =>
-      possibleShip.classList.remove('ship-possible')
-    );
-    console.log(prevHighlights);
+  const highlightShip = (length, x, y, temp) => {
+    let className = temp ? 'ship-possible' : 'ship';
+    console.log(temp);
+    if (temp) {
+      const prevHighlights = document.querySelectorAll('.ship-possible');
+      [...prevHighlights].map((possibleShip) =>
+        possibleShip.classList.remove('ship-possible')
+      );
+    }
     const row = document.querySelectorAll('.row')[y];
     for (let i = 0; i < length; i++) {
-      row.childNodes[x + i].classList.add('ship-possible');
+      row.childNodes[x + i].classList.add(className);
     }
   };
 
