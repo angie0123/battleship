@@ -2,7 +2,6 @@ export { player, computer };
 
 const player = (name) => {
   return {
-    name,
     attack: (x, y, gameBoard) => {
       return gameBoard.receiveAttack(x, y);
     },

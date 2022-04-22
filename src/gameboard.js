@@ -47,5 +47,6 @@ export const gameboard = () => {
     board,
     receiveAttack,
     checkHasWon,
+    isValidPosition,
   };
 };

@@ -8,10 +8,7 @@ beforeEach(() => {
 describe('player API works', () => {
   let testPlayer;
   beforeEach(() => {
-    testPlayer = player('Sal');
-  });
-  test('player is named correctly', () => {
-    expect(testPlayer).toHaveProperty('name', 'Sal');
+    testPlayer = player();
   });
   test('player receives coordinates to launch attack', () => {
     testPlayer.attack(3, 4, { receiveAttack });
