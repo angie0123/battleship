@@ -1,3 +1,3 @@
-import { moduleA } from './moduleA';
+import { moduleA } from './ship';
 
 console.log(moduleA);
