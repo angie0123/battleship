@@ -43,6 +43,12 @@ describe('Gameboard API', () => {
     expect(gameBoard.isValidPosition(newShip, 1, 1)).toBe(false);
     expect(gameBoard.isValidPosition(newShip, 2, 1)).toBe(false);
   });
+  test('checking if ship placement will reject when position is already occupied', () => {
+    gameBoard.placeShip(newShip, 7, 0);
+    const ship2 = ship(3);
+    expect(gameBoard.isValidPosition(ship2, 5, 0)).toBe(false);
+    expect(gameBoard.isValidPosition(ship2, 4, 0)).toBe(true);
+  });
   test('receive attack and hit ship', () => {
     gameBoard.placeShip(newShip, 1, 1);
     testBoard[1][1] = newShip;

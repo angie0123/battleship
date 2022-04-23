@@ -5,32 +5,34 @@ export const gameboard = () => {
     board[i] = [];
     //y coordinates
     for (let j = 0; j < 10; j++) {
-      board[i][j] = j;
+      board[i][j] = null;
     }
   }
 
   const placeShip = (ship, x, y) => {
-    if (!isValidPosition(ship, x, y))
-      for (let i = 0; i < ship.body.length; i++) {
-        board[x + i][y] = ship;
-      }
+    for (let i = 0; i < ship.body.length; i++) {
+      board[x + i][y] = ship;
+    }
+    console.log(board[x][y], ship);
   };
 
   const isValidPosition = (ship, x, y) => {
     let isAlreadyOccupied = false;
-    let isOutOfBounds = ship.body.length + x > 9;
+    let isOutOfBounds = ship.body.length + x > 10;
     if (!isOutOfBounds) {
       for (let i = 0; i < ship.body.length; i++) {
-        if (typeof board[x + i][y] === 'object') {
+        if (board[x + i][y] !== null) {
           isAlreadyOccupied = true;
+          console.log('occupied!');
         }
       }
     }
+    console.log(board[x][y]);
     return !isAlreadyOccupied && !isOutOfBounds;
   };
 
   const receiveAttack = (x, y) => {
-    if (typeof board[x][y] === 'object') {
+    if (typeof board[x][y] !== 'string' && board[x][y] !== null) {
       const ship = board[x][y];
       for (let i = 0; i < 10; i++) {
         if (board[i][y] === ship) {

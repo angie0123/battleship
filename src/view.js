@@ -58,7 +58,6 @@ export const view = () => {
 
   const highlightShip = (length, x, y, temp) => {
     let className = temp ? 'ship-possible' : 'ship';
-    console.log(temp);
     if (temp) {
       const prevHighlights = document.querySelectorAll('.ship-possible');
       [...prevHighlights].map((possibleShip) =>
