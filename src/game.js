@@ -17,8 +17,8 @@ export const game = (player, computer, gameboard, ship, view) => {
     playerShips = [ship(2), ship(3), ship(3), ship(4), ship(5)];
     computerShips = [ship(2), ship(3), ship(3), ship(4), ship(5)];
     appView = view();
-    appView.setHandlers({ handlePlacement });
     appView.init();
+    appView.bindPlacementHandlers(handlePlacement, handlePlacement);
   };
 
   const beginGame = () => {

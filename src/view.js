@@ -1,10 +1,4 @@
 export const view = () => {
-  let handlers;
-
-  const setHandlers = (handlerObj) => {
-    handlers = handlerObj;
-  };
-
   const createElement = (type, ...classNames) => {
     const el = document.createElement(type);
     for (let index in classNames) {
@@ -36,6 +30,21 @@ export const view = () => {
     document.querySelector('body').append(title, status, boardsContainer);
   };
 
+  const bindPlacementHandlers = (clickHandler, hoverHandler) => {
+    const grid = document.querySelectorAll('.square');
+    const playerGrid = [...grid].slice(0, 100);
+    playerGrid.map((square, index) => {
+      const x = index % 10;
+      const y = Math.floor(index / 10);
+      square.addEventListener('mouseenter', () => {
+        hoverHandler(x, y, true);
+      });
+      square.addEventListener('click', () => {
+        clickHandler(x, y, false);
+      });
+    });
+  };
+
   const createBoard = () => {
     let board = createElement('div', 'board-grid');
     for (let i = 0; i < 10; i++) {
@@ -43,12 +52,6 @@ export const view = () => {
       for (let j = 0; j < 10; j++) {
         const square = createElement('div', 'square');
         square.textContent = `${j}, ${i}`;
-        square.addEventListener('mouseenter', () => {
-          handlers.handlePlacement(j, i, true);
-        });
-        square.addEventListener('click', () => {
-          handlers.handlePlacement(j, i, false);
-        });
         row.append(square);
       }
       board.append(row);
@@ -72,7 +75,7 @@ export const view = () => {
 
   return {
     init,
-    setHandlers,
     highlightShip,
+    bindPlacementHandlers,
   };
 };
