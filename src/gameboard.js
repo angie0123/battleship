@@ -10,11 +10,10 @@ export const gameboard = () => {
   }
 
   const placeShip = (ship, x, y) => {
-    if (!isValidPosition(ship, x, y)) return false;
-    for (let i = 0; i < ship.body.length; i++) {
-      board[x + i][y] = ship;
-    }
-    return true;
+    if (!isValidPosition(ship, x, y))
+      for (let i = 0; i < ship.body.length; i++) {
+        board[x + i][y] = ship;
+      }
   };
 
   const isValidPosition = (ship, x, y) => {

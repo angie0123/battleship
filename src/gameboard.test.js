@@ -24,12 +24,10 @@ describe('Gameboard API', () => {
     testBoard[3][4] = newShip;
     testBoard[4][4] = newShip;
     expect(gameBoard.board).toEqual(testBoard);
-    expect(gameBoard.placeShip(newShip, 3, 4)).toBe(true);
   });
   test('placing a ship on invalid coordinates', () => {
     gameBoard.placeShip(newShip, 9, 9);
     expect(gameBoard.board).toEqual(testBoard);
-    expect(gameBoard.placeShip(newShip, 9, 9)).toBe(false);
   });
   test('placing a ship on invalid coordinates', () => {
     gameBoard.placeShip(newShip, 8, 1);

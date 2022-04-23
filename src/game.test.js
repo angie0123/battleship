@@ -15,6 +15,7 @@ describe('game API works', () => {
     testView = () => {
       return {
         init: jest.fn(),
+        setHandlers: jest.fn(),
       };
     };
     testBoard = gameboard;
@@ -47,8 +48,13 @@ describe('game API works', () => {
     testGame.init();
     expect(mockShip.mock.calls.length).toBe(10);
   });
-  test('initializer calls the view', () => {
+  test('initializer calls the view init function', () => {
     testGame.init();
-    expect(testView.init).toHaveBeenCalled();
+    expect(testView().init).toHaveBeenCalled();
+  });
+  test('initializer calls view setHandler function', () => {
+    testGame.init();
+    const view = testView();
+    expect(view.setHandlers).toHaveBeenCalled();
   });
 });
