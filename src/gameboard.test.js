@@ -15,7 +15,7 @@ describe('Gameboard API', () => {
     for (let i = 0; i < 10; i++) {
       testBoard[i] = [];
       for (let j = 0; j < 10; j++) {
-        testBoard[i][j] = j;
+        testBoard[i][j] = null;
       }
     }
   });
@@ -24,15 +24,6 @@ describe('Gameboard API', () => {
     testBoard[3][4] = newShip;
     testBoard[4][4] = newShip;
     expect(gameBoard.board).toEqual(testBoard);
-  });
-  test('placing a ship on invalid coordinates', () => {
-    gameBoard.placeShip(newShip, 9, 9);
-    expect(gameBoard.board).toEqual(testBoard);
-  });
-  test('placing a ship on invalid coordinates', () => {
-    gameBoard.placeShip(newShip, 8, 1);
-    expect(gameBoard.board).toEqual(testBoard);
-    expect(gameBoard.placeShip(newShip, 8, 1)).toBe(false);
   });
   test('checking if ship placement is out of bounds', () => {
     gameBoard.placeShip(newShip, 8, 1);
