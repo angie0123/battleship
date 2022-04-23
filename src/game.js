@@ -21,6 +21,11 @@ export const game = (player, computer, gameboard, ship, view) => {
     appView.init();
   };
 
+  const beginGame = () => {
+    appView.setHandlers({ handleAttack });
+    appView.startGame();
+  };
+
   const handlePlacement = (x, y, temp) => {
     if (shipPointer >= playerShips.length) return;
     const currentShip = playerShips[shipPointer];
@@ -28,6 +33,7 @@ export const game = (player, computer, gameboard, ship, view) => {
       appView.highlightShip(currentShip.body.length, x, y, temp);
     }
     if (!temp) shipPointer += 1;
+    if (shipPointer === playerShips.length) beginGame();
   };
 
   return {

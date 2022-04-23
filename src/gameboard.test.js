@@ -19,22 +19,26 @@ describe('Gameboard API', () => {
       }
     }
   });
-  test('placing a ship on the right coordinates', () => {
+  test('placing a ship on coordinates', () => {
     gameBoard.placeShip(newShip, 3, 4);
     testBoard[3][4] = newShip;
     testBoard[4][4] = newShip;
     expect(gameBoard.board).toEqual(testBoard);
-    expect(gameBoard.placeShip(newShip, 3, 4)).toEqual(true);
+    expect(gameBoard.placeShip(newShip, 3, 4)).toBe(true);
   });
   test('placing a ship on invalid coordinates', () => {
     gameBoard.placeShip(newShip, 9, 9);
     expect(gameBoard.board).toEqual(testBoard);
-    expect(gameBoard.placeShip(newShip, 9, 9)).toEqual(false);
+    expect(gameBoard.placeShip(newShip, 9, 9)).toBe(false);
   });
   test('placing a ship on invalid coordinates', () => {
     gameBoard.placeShip(newShip, 8, 1);
     expect(gameBoard.board).toEqual(testBoard);
-    expect(gameBoard.placeShip(newShip, 8, 1)).toEqual(false);
+    expect(gameBoard.placeShip(newShip, 8, 1)).toBe(false);
+  });
+  test('checking if ship placement is out of bounds', () => {
+    gameBoard.placeShip(newShip, 8, 1);
+    expect(gameBoard.isValidPosition(newShip, 8, 1)).toBe(false);
   });
   test('receive attack and hit ship', () => {
     gameBoard.placeShip(newShip, 1, 1);
@@ -54,11 +58,11 @@ describe('Gameboard API', () => {
   });
   test('receive attack returns false if missed', () => {
     gameBoard.placeShip(newShip, 1, 1);
-    expect(gameBoard.receiveAttack(4, 1)).toEqual(false);
+    expect(gameBoard.receiveAttack(4, 1)).toBe(false);
   });
   test('receive attack returns true if hit', () => {
     gameBoard.placeShip(newShip, 1, 1);
-    expect(gameBoard.receiveAttack(2, 1)).toEqual(true);
+    expect(gameBoard.receiveAttack(2, 1)).toBe(true);
   });
   test('sends true when all ships are sunk', () => {
     expect(gameBoard.checkHasWon()).toBe(true);

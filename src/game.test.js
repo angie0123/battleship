@@ -12,8 +12,10 @@ let testShip;
 
 describe('game API works', () => {
   beforeEach(() => {
-    testView = {
-      init: jest.fn(),
+    testView = () => {
+      return {
+        init: jest.fn(),
+      };
     };
     testBoard = gameboard;
     testPlayer = player;

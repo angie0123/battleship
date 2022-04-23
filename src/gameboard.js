@@ -17,9 +17,17 @@ export const gameboard = () => {
     return true;
   };
 
-  const isValidPosition = (ship, x) => {
-    const shipLength = ship.body.length;
-    return !(shipLength + x > 9);
+  const isValidPosition = (ship, x, y) => {
+    let isAlreadyOccupied = false;
+    let isOutOfBounds = ship.body.length + x > 9;
+    if (!isOutOfBounds) {
+      for (let i = 0; i < ship.body.length; i++) {
+        if (typeof board[x + i][y] === 'object') {
+          isAlreadyOccupied = true;
+        }
+      }
+    }
+    return !isAlreadyOccupied && !isOutOfBounds;
   };
 
   const receiveAttack = (x, y) => {
