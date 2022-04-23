@@ -13,7 +13,6 @@ export const gameboard = () => {
     for (let i = 0; i < ship.body.length; i++) {
       board[x + i][y] = ship;
     }
-    console.log(board[x][y], ship);
   };
 
   const isValidPosition = (ship, x, y) => {
@@ -23,11 +22,9 @@ export const gameboard = () => {
       for (let i = 0; i < ship.body.length; i++) {
         if (board[x + i][y] !== null) {
           isAlreadyOccupied = true;
-          console.log('occupied!');
         }
       }
     }
-    console.log(board[x][y]);
     return !isAlreadyOccupied && !isOutOfBounds;
   };
 
@@ -46,9 +43,15 @@ export const gameboard = () => {
   };
 
   const checkHasWon = () => {
-    return board.every((xPos) =>
-      xPos.every((yPos) => typeof yPos !== 'object')
-    );
+    let shipsPresent = false;
+    for (let i = 0; i < 10; i++) {
+      for (let j = 0; j < 10; j++) {
+        if (typeof board[i][j] !== 'string' && board[i][j] !== null) {
+          shipsPresent = true;
+        }
+      }
+    }
+    return !shipsPresent;
   };
 
   return {
