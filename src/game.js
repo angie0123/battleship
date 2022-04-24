@@ -47,7 +47,17 @@ export const game = (player, computer, gameboard, ship, view) => {
 
   const handleAttack = (x, y, boardIndex) => {
     const playerDidHit = playerA.attack(x, y, computerTurf);
-    console.log(playerDidHit);
+    appView.disable(x, y, boardIndex);
+    appView.paint(x, y, boardIndex, playerDidHit);
+    const [computerDidHit, computerAttackX, computerAttackY] =
+      computerAI.randomAttack(playerTurf);
+    const playerBoardIndex = 0;
+    appView.paint(
+      computerAttackX,
+      computerAttackY,
+      playerBoardIndex,
+      computerDidHit
+    );
   };
 
   const handleCheckPlacement = (x, y, boardIndex) => {

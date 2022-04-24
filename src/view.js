@@ -35,13 +35,18 @@ export const view = () => {
     board.replaceWith(board.cloneNode(true));
   };
 
-  const bindHandlers = (handlersObj, boardIndex) => {
+  const getBoard = (boardIndex) => {
     const grid = document.querySelectorAll('.square');
     const indexStart = boardIndex * 100;
     const indexEnd = indexStart + 100;
     const boardGrid = [...grid].slice(indexStart, indexEnd);
+    return boardGrid;
+  };
 
-    boardGrid.map((square, index) => {
+  const bindHandlers = (handlersObj, boardIndex) => {
+    const board = getBoard(boardIndex);
+
+    board.map((square, index) => {
       const x = index % 10;
       const y = Math.floor(index / 10);
       if (handlersObj.hasOwnProperty('hoverHandler')) {
@@ -72,10 +77,20 @@ export const view = () => {
 
   const highlightShip = (length, x, y, temp, boardIndex) => {
     let className = temp ? 'ship-possible' : 'ship';
-    const row = document.querySelectorAll('.row')[y + boardIndex * 10];
     for (let i = 0; i < length; i++) {
-      row.childNodes[x + i].classList.add(className);
+      const square = getSquare(x + i, y, boardIndex);
+      square.classList.add(className);
     }
+  };
+
+  const getSquare = (x, y, boardIndex) => {
+    const row = document.querySelectorAll('.row')[y + boardIndex * 10];
+    return row.childNodes[x];
+  };
+
+  const disable = (x, y, boardIndex) => {
+    const square = getSquare(x, y, boardIndex);
+    square.replaceWith(square.cloneNode(false));
   };
 
   const clearPrevHighlights = () => {
@@ -91,5 +106,6 @@ export const view = () => {
     bindHandlers,
     removeAllHandlers,
     clearPrevHighlights,
+    disable,
   };
 };
