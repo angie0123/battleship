@@ -25,10 +25,10 @@ export const game = (player, computer, gameboard, ship, view) => {
   };
 
   const beginGame = () => {
-    appView.removePlacementHandler(handlePlacement);
+    appView.removeAllHandlers(0);
 
-    appView.bindAttackHandler({ handleAttack });
-    appView.startGame();
+    // appView.bindAttackHandler({ handleAttack });
+    // appView.startGame();
   };
 
   const handleAttack = () => {};

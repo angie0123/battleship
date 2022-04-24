@@ -30,13 +30,14 @@ export const view = () => {
     document.querySelector('body').append(title, status, boardsContainer);
   };
 
-  const bindAttackHandler = (attackHandler) => {
-    console.log(attackHandler);
+  const removeAllHandlers = (boardIndex) => {
+    const board = document.querySelectorAll('.board-grid')[boardIndex];
+    board.replaceWith(board.cloneNode(true));
   };
 
-  const bindHandlers = (handlersObj, boardId) => {
+  const bindHandlers = (handlersObj, boardIndex) => {
     const grid = document.querySelectorAll('.square');
-    const indexStart = boardId * 100;
+    const indexStart = boardIndex * 100;
     const indexEnd = indexStart + 100;
     const boardGrid = [...grid].slice(indexStart, indexEnd);
 
@@ -45,14 +46,12 @@ export const view = () => {
       const y = Math.floor(index / 10);
       if (handlersObj.hasOwnProperty('hoverHandler')) {
         square.addEventListener('mouseenter', () => {
-          handlersObj.hoverHandler(x, y, boardId);
-          console.log(handlersObj.hoverHandler);
+          handlersObj.hoverHandler(x, y, boardIndex);
         });
       }
       if (handlersObj.hasOwnProperty('clickHandler'))
         square.addEventListener('click', () => {
-          handlersObj.clickHandler(x, y, boardId);
-          console.log(handlersObj.clickHandler);
+          handlersObj.clickHandler(x, y, boardIndex);
         });
     });
   };
@@ -71,10 +70,10 @@ export const view = () => {
     return board;
   };
 
-  const highlightShip = (length, x, y, temp, boardId) => {
+  const highlightShip = (length, x, y, temp, boardIndex) => {
     let className = temp ? 'ship-possible' : 'ship';
     clearPrevHighlights();
-    const row = document.querySelectorAll('.row')[y + boardId * 10];
+    const row = document.querySelectorAll('.row')[y + boardIndex * 10];
     for (let i = 0; i < length; i++) {
       row.childNodes[x + i].classList.add(className);
     }
@@ -91,6 +90,7 @@ export const view = () => {
     init,
     highlightShip,
     bindHandlers,
+    removeAllHandlers,
     clearPrevHighlights,
   };
 };
