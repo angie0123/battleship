@@ -26,25 +26,39 @@ export const game = (player, computer, gameboard, ship, view) => {
 
   const beginGame = () => {
     appView.removeAllHandlers(0);
-
+    populateComputerTurf();
     // appView.bindAttackHandler({ handleAttack });
     // appView.startGame();
   };
 
+  const populateComputerTurf = () => {
+    const randomInt = () => {
+      return Math.floor(Math.random() * 10);
+    };
+    computerShips.map((ship) => {
+      let x, y;
+      do {
+        x = randomInt();
+        y = randomInt();
+      } while (!computerTurf.isValidPosition(ship, x, y));
+      computerTurf.placeShip(ship, x, y);
+    });
+  };
+
   const handleAttack = () => {};
 
-  const handleCheckPlacement = (x, y, boardId) => {
+  const handleCheckPlacement = (x, y, boardIndex) => {
     const currentShip = playerShips[shipPointer];
     appView.clearPrevHighlights();
     if (playerTurf.isValidPosition(currentShip, x, y)) {
-      appView.highlightShip(currentShip.body.length, x, y, true, boardId);
+      appView.highlightShip(currentShip.body.length, x, y, true, boardIndex);
     }
   };
 
-  const handlePlacement = (x, y, boardId) => {
+  const handlePlacement = (x, y, boardIndex) => {
     const currentShip = playerShips[shipPointer];
     if (playerTurf.isValidPosition(currentShip, x, y)) {
-      appView.highlightShip(currentShip.body.length, x, y, false, boardId);
+      appView.highlightShip(currentShip.body.length, x, y, false, boardIndex);
       playerTurf.placeShip(currentShip, x, y);
       shipPointer += 1;
     }
