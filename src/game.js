@@ -64,8 +64,9 @@ export const game = (player, computer, gameboard, ship, view) => {
   };
 
   const handleGameOver = () => {
-    const winner = computerTurf.checkHasLost() ? 'You win!' : 'You lose';
-    console.log(winner);
+    const message = computerTurf.checkHasLost() ? 'You win!' : 'You lose';
+    appView.displayWinner(message);
+    appView.displayPlayAgain();
   };
 
   const handleCheckPlacement = (x, y, boardIndex) => {

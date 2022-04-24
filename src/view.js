@@ -106,6 +106,19 @@ export const view = () => {
     square.classList.add(className);
   };
 
+  const displayWinner = (message) => {
+    const status = document.querySelector('.status');
+    status.textContent = message;
+  };
+
+  const displayPlayAgain = () => {
+    const boardsContainer = document.querySelector('.boards-container');
+    const parent = boardsContainer.parentNode;
+    const button = createElement('div', 'play-again');
+    button.textContent = 'Play Again';
+    parent.insertBefore(button, boardsContainer);
+  };
+
   return {
     init,
     highlightShip,
@@ -114,5 +127,7 @@ export const view = () => {
     clearPrevHighlights,
     disable,
     paint,
+    displayWinner,
+    displayPlayAgain,
   };
 };
