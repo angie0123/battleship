@@ -66,3 +66,11 @@ body {
 .ship-possible {
   background-color: grey;
 }
+
+.hit {
+  background-color: rgb(182, 58, 58);
+}
+
+.miss {
+  background-color: rgb(82, 82, 201);
+}

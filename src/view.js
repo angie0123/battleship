@@ -100,6 +100,12 @@ export const view = () => {
     );
   };
 
+  const paint = (x, y, boardIndex, didHit) => {
+    const square = getSquare(x, y, boardIndex);
+    const className = didHit ? 'hit' : 'miss';
+    square.classList.add(className);
+  };
+
   return {
     init,
     highlightShip,
@@ -107,5 +113,6 @@ export const view = () => {
     removeAllHandlers,
     clearPrevHighlights,
     disable,
+    paint,
   };
 };
