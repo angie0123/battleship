@@ -30,18 +30,28 @@ export const view = () => {
     document.querySelector('body').append(title, status, boardsContainer);
   };
 
-  const bindPlacementHandlers = (clickHandler, hoverHandler) => {
+  const bindAttackHandler = (attackHandler) => {
+    console.log(attackHandler);
+  };
+
+  const bindHandlers = (handlersObj, boardId) => {
     const grid = document.querySelectorAll('.square');
-    const playerGrid = [...grid].slice(0, 100);
-    playerGrid.map((square, index) => {
+    const indexStart = boardId * 100;
+    const indexEnd = indexStart + 100;
+    const boardGrid = [...grid].slice(indexStart, indexEnd);
+
+    boardGrid.map((square, index) => {
       const x = index % 10;
       const y = Math.floor(index / 10);
-      square.addEventListener('mouseenter', () => {
-        hoverHandler(x, y, true);
-      });
-      square.addEventListener('click', () => {
-        clickHandler(x, y, false);
-      });
+      if (handlersObj.hasOwnProperty('hoverHandler')) {
+        square.addEventListener('mouseenter', () => {
+          handlersObj.hoverHandler(x, y, boardId);
+        });
+      }
+      if (handlersObj.hasOwnProperty('clickHandler'))
+        square.addEventListener('click', () => {
+          handlersObj.clickHandler(x, y, boardId);
+        });
     });
   };
 
@@ -76,6 +86,6 @@ export const view = () => {
   return {
     init,
     highlightShip,
-    bindPlacementHandlers,
+    bindHandlers,
   };
 };

@@ -18,17 +18,22 @@ export const game = (player, computer, gameboard, ship, view) => {
     computerShips = [ship(2), ship(3), ship(3), ship(4), ship(5)];
     appView = view();
     appView.init();
-    appView.bindPlacementHandlers(handlePlacement, handlePlacement);
+    appView.bindHandlers(
+      { clickHandler: handlePlacement, hoverHandler: handlePlacement },
+      1
+    );
   };
 
   const beginGame = () => {
-    appView.setHandlers({ handleAttack });
+    appView.removePlacementHandler(handlePlacement);
+
+    appView.bindAttackHandler({ handleAttack });
     appView.startGame();
   };
 
   const handleAttack = () => {};
 
-  const handlePlacement = (x, y, temp) => {
+  const handlePlacement = (x, y, temp, boardNum) => {
     const currentShip = playerShips[shipPointer];
     if (playerTurf.isValidPosition(currentShip, x, y)) {
       appView.highlightShip(currentShip.body.length, x, y, temp);
