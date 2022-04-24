@@ -72,7 +72,6 @@ export const view = () => {
 
   const highlightShip = (length, x, y, temp, boardIndex) => {
     let className = temp ? 'ship-possible' : 'ship';
-    clearPrevHighlights();
     const row = document.querySelectorAll('.row')[y + boardIndex * 10];
     for (let i = 0; i < length; i++) {
       row.childNodes[x + i].classList.add(className);

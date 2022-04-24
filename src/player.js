@@ -1,6 +1,6 @@
 export { player, computer };
 
-const player = (name) => {
+const player = () => {
   return {
     attack: (x, y, gameBoard) => {
       return gameBoard.receiveAttack(x, y);
@@ -20,7 +20,7 @@ const computer = () => {
         key = `${x} ${y}`;
       } while (alreadyPlayed.includes(key));
       alreadyPlayed.push(key);
-      return gameBoard.receiveAttack(x, y);
+      return [gameBoard.receiveAttack(x, y), x, y];
     },
   };
 };

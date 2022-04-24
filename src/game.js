@@ -27,7 +27,7 @@ export const game = (player, computer, gameboard, ship, view) => {
   const beginGame = () => {
     appView.removeAllHandlers(0);
     populateComputerTurf();
-    // appView.bindAttackHandler({ handleAttack });
+    appView.bindHandlers({ clickHandler: handleAttack }, 1);
     // appView.startGame();
   };
 
@@ -45,7 +45,10 @@ export const game = (player, computer, gameboard, ship, view) => {
     });
   };
 
-  const handleAttack = () => {};
+  const handleAttack = (x, y, boardIndex) => {
+    const playerDidHit = playerA.attack(x, y, computerTurf);
+    console.log(playerDidHit);
+  };
 
   const handleCheckPlacement = (x, y, boardIndex) => {
     const currentShip = playerShips[shipPointer];
@@ -58,6 +61,7 @@ export const game = (player, computer, gameboard, ship, view) => {
   const handlePlacement = (x, y, boardIndex) => {
     const currentShip = playerShips[shipPointer];
     if (playerTurf.isValidPosition(currentShip, x, y)) {
+      appView.clearPrevHighlights();
       appView.highlightShip(currentShip.body.length, x, y, false, boardIndex);
       playerTurf.placeShip(currentShip, x, y);
       shipPointer += 1;
