@@ -42,7 +42,7 @@ export const gameboard = () => {
     return false;
   };
 
-  const checkHasWon = () => {
+  const checkHasLost = () => {
     let shipsPresent = false;
     for (let i = 0; i < 10; i++) {
       for (let j = 0; j < 10; j++) {
@@ -58,7 +58,7 @@ export const gameboard = () => {
     placeShip,
     board,
     receiveAttack,
-    checkHasWon,
+    checkHasLost,
     isValidPosition,
   };
 };

@@ -58,6 +58,14 @@ export const game = (player, computer, gameboard, ship, view) => {
       playerBoardIndex,
       computerDidHit
     );
+    if (computerTurf.checkHasLost() || playerTurf.checkHasLost()) {
+      handleGameOver();
+    }
+  };
+
+  const handleGameOver = () => {
+    const winner = computerTurf.checkHasLost() ? 'You win!' : 'You lose';
+    console.log(winner);
   };
 
   const handleCheckPlacement = (x, y, boardIndex) => {

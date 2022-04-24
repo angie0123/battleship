@@ -67,7 +67,7 @@ describe('Gameboard API', () => {
   test('sends true when all ships are sunk', () => {
     expect(gameBoard.checkHasWon()).toBe(true);
   });
-  test('sends true when ships still exist on board', () => {
+  test('sends true when all ships are lost', () => {
     gameBoard.placeShip(newShip, 1, 1);
     expect(gameBoard.checkHasWon()).toBe(false);
   });
