@@ -19,8 +19,8 @@ export const game = (player, computer, gameboard, ship, view) => {
     appView = view();
     appView.init();
     appView.bindHandlers(
-      { clickHandler: handlePlacement, hoverHandler: handlePlacement },
-      1
+      { hoverHandler: handleCheckPlacement, clickHandler: handlePlacement },
+      0
     );
   };
 
@@ -33,14 +33,20 @@ export const game = (player, computer, gameboard, ship, view) => {
 
   const handleAttack = () => {};
 
-  const handlePlacement = (x, y, temp, boardNum) => {
+  const handleCheckPlacement = (x, y, boardId) => {
+    const currentShip = playerShips[shipPointer];
+    appView.clearPrevHighlights();
+    if (playerTurf.isValidPosition(currentShip, x, y)) {
+      appView.highlightShip(currentShip.body.length, x, y, true, boardId);
+    }
+  };
+
+  const handlePlacement = (x, y, boardId) => {
     const currentShip = playerShips[shipPointer];
     if (playerTurf.isValidPosition(currentShip, x, y)) {
-      appView.highlightShip(currentShip.body.length, x, y, temp);
-      if (!temp) {
-        playerTurf.placeShip(currentShip, x, y);
-        shipPointer += 1;
-      }
+      appView.highlightShip(currentShip.body.length, x, y, false, boardId);
+      playerTurf.placeShip(currentShip, x, y);
+      shipPointer += 1;
     }
     if (shipPointer === playerShips.length) beginGame();
   };

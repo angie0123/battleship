@@ -46,11 +46,13 @@ export const view = () => {
       if (handlersObj.hasOwnProperty('hoverHandler')) {
         square.addEventListener('mouseenter', () => {
           handlersObj.hoverHandler(x, y, boardId);
+          console.log(handlersObj.hoverHandler);
         });
       }
       if (handlersObj.hasOwnProperty('clickHandler'))
         square.addEventListener('click', () => {
           handlersObj.clickHandler(x, y, boardId);
+          console.log(handlersObj.clickHandler);
         });
     });
   };
@@ -69,23 +71,26 @@ export const view = () => {
     return board;
   };
 
-  const highlightShip = (length, x, y, temp) => {
+  const highlightShip = (length, x, y, temp, boardId) => {
     let className = temp ? 'ship-possible' : 'ship';
-    if (temp) {
-      const prevHighlights = document.querySelectorAll('.ship-possible');
-      [...prevHighlights].map((possibleShip) =>
-        possibleShip.classList.remove('ship-possible')
-      );
-    }
-    const row = document.querySelectorAll('.row')[y];
+    clearPrevHighlights();
+    const row = document.querySelectorAll('.row')[y + boardId * 10];
     for (let i = 0; i < length; i++) {
       row.childNodes[x + i].classList.add(className);
     }
+  };
+
+  const clearPrevHighlights = () => {
+    const prevHighlights = document.querySelectorAll('.ship-possible');
+    [...prevHighlights].map((possibleShip) =>
+      possibleShip.classList.remove('ship-possible')
+    );
   };
 
   return {
     init,
     highlightShip,
     bindHandlers,
+    clearPrevHighlights,
   };
 };
