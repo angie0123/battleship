@@ -123,6 +123,11 @@ export const view = () => {
     parent.insertBefore(button, boardsContainer);
   };
 
+  const startGameMsg = () => {
+    const status = document.querySelector('.status');
+    status.textContent = 'Begin!';
+  };
+
   return {
     init,
     highlightShip,
@@ -133,5 +138,6 @@ export const view = () => {
     paint,
     displayWinner,
     displayPlayAgain,
+    startGameMsg,
   };
 };

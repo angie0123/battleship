@@ -27,7 +27,7 @@ export const game = (player, computer, gameboard, ship, view) => {
     appView.removeAllHandlers(playerBoardId);
     populateComputerTurf();
     appView.bindHandlers(computerBoardHandlers, computerBoardId);
-    // appView.startGame();
+    appView.startGameMsg();
   };
 
   const populateComputerTurf = () => {
