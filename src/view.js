@@ -131,6 +131,10 @@ export const view = () => {
     status.textContent = 'Begin!';
   };
 
+  const clear = () => {
+    document.body.replaceWith(createElement('body'));
+  };
+
   return {
     init,
     highlightShip,
@@ -142,5 +146,6 @@ export const view = () => {
     displayWinner,
     displayPlayAgain,
     startGameMsg,
+    clear,
   };
 };

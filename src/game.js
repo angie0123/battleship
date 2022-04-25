@@ -5,13 +5,13 @@ export const game = (player, computer, gameboard, ship, view) => {
     computerAI,
     playerShips,
     computerShips,
-    appView;
-
-  let shipPointer = 0;
+    appView,
+    shipPointer;
   const playerBoardId = 0;
   const computerBoardId = 1;
 
   const init = () => {
+    shipPointer = 0;
     playerTurf = gameboard();
     computerTurf = gameboard();
     playerA = player();
