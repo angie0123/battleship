@@ -2,11 +2,12 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+  --bg-color: rgb(241, 231, 231);
 }
 
 body {
   height: 100vh;
-  background-color: rosybrown;
+  background-color: var(--bg-color);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -24,7 +25,6 @@ body {
 }
 
 .boards-container {
-  background-color: white;
   display: flex;
   width: 1000px;
   justify-content: space-between;
@@ -73,4 +73,18 @@ body {
 
 .miss {
   background-color: rgb(82, 82, 201);
+}
+
+.play-again {
+  margin-top: 20px;
+  padding: 12px;
+  background-color: rgb(169, 230, 77);
+  border-radius: 8px;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.hoverable:hover {
+  cursor: pointer;
+  opacity: 0.8;
 }

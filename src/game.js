@@ -8,6 +8,8 @@ export const game = (player, computer, gameboard, ship, view) => {
     appView;
 
   let shipPointer = 0;
+  const playerBoardId = 0;
+  const computerBoardId = 1;
 
   const init = () => {
     playerTurf = gameboard();
@@ -18,16 +20,13 @@ export const game = (player, computer, gameboard, ship, view) => {
     computerShips = [ship(2), ship(3), ship(3), ship(4), ship(5)];
     appView = view();
     appView.init();
-    appView.bindHandlers(
-      { hoverHandler: handleCheckPlacement, clickHandler: handlePlacement },
-      0
-    );
+    appView.bindHandlers(playerBoardHandlers, playerBoardId);
   };
 
   const beginGame = () => {
-    appView.removeAllHandlers(0);
+    appView.removeAllHandlers(playerBoardId);
     populateComputerTurf();
-    appView.bindHandlers({ clickHandler: handleAttack }, 1);
+    appView.bindHandlers(computerBoardHandlers, computerBoardId);
     // appView.startGame();
   };
 
@@ -45,47 +44,62 @@ export const game = (player, computer, gameboard, ship, view) => {
     });
   };
 
-  const handleAttack = (x, y, boardIndex) => {
-    const playerDidHit = playerA.attack(x, y, computerTurf);
-    appView.disable(x, y, boardIndex);
-    appView.paint(x, y, boardIndex, playerDidHit);
-    const [computerDidHit, computerAttackX, computerAttackY] =
-      computerAI.randomAttack(playerTurf);
-    const playerBoardIndex = 0;
-    appView.paint(
-      computerAttackX,
-      computerAttackY,
-      playerBoardIndex,
-      computerDidHit
-    );
-    if (computerTurf.checkHasLost() || playerTurf.checkHasLost()) {
-      handleGameOver();
-    }
+  const handleAttackCallback = (x, y, boardIndex) => {
+    return function handleAttack() {
+      const playerDidHit = playerA.attack(x, y, computerTurf);
+      appView.disable(x, y, boardIndex);
+      appView.paint(x, y, boardIndex, playerDidHit);
+      const [computerDidHit, computerAttackX, computerAttackY] =
+        computerAI.randomAttack(playerTurf);
+      appView.paint(
+        computerAttackX,
+        computerAttackY,
+        playerBoardId,
+        computerDidHit
+      );
+      if (computerTurf.checkHasLost() || playerTurf.checkHasLost()) {
+        handleGameOver();
+      }
+    };
   };
 
   const handleGameOver = () => {
+    appView.removeAllHandlers(computerBoardId);
     const message = computerTurf.checkHasLost() ? 'You win!' : 'You lose';
     appView.displayWinner(message);
     appView.displayPlayAgain();
   };
 
-  const handleCheckPlacement = (x, y, boardIndex) => {
-    const currentShip = playerShips[shipPointer];
-    appView.clearPrevHighlights();
-    if (playerTurf.isValidPosition(currentShip, x, y)) {
-      appView.highlightShip(currentShip.body.length, x, y, true, boardIndex);
-    }
+  const handleCheckPlacementCallback = (x, y, boardIndex) => {
+    return function handleCheckPlacement() {
+      const currentShip = playerShips[shipPointer];
+      appView.clearPrevHighlights();
+      if (playerTurf.isValidPosition(currentShip, x, y)) {
+        appView.highlightShip(currentShip.body.length, x, y, true, boardIndex);
+      }
+    };
   };
 
-  const handlePlacement = (x, y, boardIndex) => {
-    const currentShip = playerShips[shipPointer];
-    if (playerTurf.isValidPosition(currentShip, x, y)) {
-      appView.clearPrevHighlights();
-      appView.highlightShip(currentShip.body.length, x, y, false, boardIndex);
-      playerTurf.placeShip(currentShip, x, y);
-      shipPointer += 1;
-    }
-    if (shipPointer === playerShips.length) beginGame();
+  const handlePlacementCallback = (x, y, boardIndex) => {
+    return function handlePlacement() {
+      const currentShip = playerShips[shipPointer];
+      if (playerTurf.isValidPosition(currentShip, x, y)) {
+        appView.clearPrevHighlights();
+        appView.highlightShip(currentShip.body.length, x, y, false, boardIndex);
+        playerTurf.placeShip(currentShip, x, y);
+        shipPointer += 1;
+      }
+      if (shipPointer === playerShips.length) beginGame();
+    };
+  };
+
+  const computerBoardHandlers = {
+    clickHandler: handleAttackCallback,
+  };
+
+  const playerBoardHandlers = {
+    clickHandler: handlePlacementCallback,
+    hoverHandler: handleCheckPlacementCallback,
   };
 
   return {

@@ -33,6 +33,8 @@ export const view = () => {
   const removeAllHandlers = (boardIndex) => {
     const board = document.querySelectorAll('.board-grid')[boardIndex];
     board.replaceWith(board.cloneNode(true));
+    const boardIterable = getBoard(boardIndex);
+    boardIterable.map((square) => square.classList.remove('hoverable'));
   };
 
   const getBoard = (boardIndex) => {
@@ -45,19 +47,21 @@ export const view = () => {
 
   const bindHandlers = (handlersObj, boardIndex) => {
     const board = getBoard(boardIndex);
-
     board.map((square, index) => {
+      square.classList.add('hoverable');
       const x = index % 10;
       const y = Math.floor(index / 10);
       if (handlersObj.hasOwnProperty('hoverHandler')) {
-        square.addEventListener('mouseenter', () => {
-          handlersObj.hoverHandler(x, y, boardIndex);
-        });
+        square.addEventListener(
+          'mouseenter',
+          handlersObj.hoverHandler(x, y, boardIndex)
+        );
       }
       if (handlersObj.hasOwnProperty('clickHandler'))
-        square.addEventListener('click', () => {
-          handlersObj.clickHandler(x, y, boardIndex);
-        });
+        square.addEventListener(
+          'click',
+          handlersObj.clickHandler(x, y, boardIndex)
+        );
     });
   };
 
@@ -67,7 +71,6 @@ export const view = () => {
       const row = createElement('div', 'row');
       for (let j = 0; j < 10; j++) {
         const square = createElement('div', 'square');
-        square.textContent = `${j}, ${i}`;
         row.append(square);
       }
       board.append(row);
@@ -90,7 +93,8 @@ export const view = () => {
 
   const disable = (x, y, boardIndex) => {
     const square = getSquare(x, y, boardIndex);
-    square.replaceWith(square.cloneNode(false));
+    const newSquare = createElement('div', 'square');
+    square.replaceWith(newSquare);
   };
 
   const clearPrevHighlights = () => {
@@ -114,7 +118,7 @@ export const view = () => {
   const displayPlayAgain = () => {
     const boardsContainer = document.querySelector('.boards-container');
     const parent = boardsContainer.parentNode;
-    const button = createElement('div', 'play-again');
+    const button = createElement('div', 'play-again', 'hoverable');
     button.textContent = 'Play Again';
     parent.insertBefore(button, boardsContainer);
   };
