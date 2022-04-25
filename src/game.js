@@ -67,7 +67,7 @@ export const game = (player, computer, gameboard, ship, view) => {
     appView.removeAllHandlers(computerBoardId);
     const message = computerTurf.checkHasLost() ? 'You win!' : 'You lose';
     appView.displayWinner(message);
-    appView.displayPlayAgain();
+    appView.displayPlayAgain(handleRestart);
   };
 
   const handleCheckPlacementCallback = (x, y, boardIndex) => {
@@ -91,6 +91,11 @@ export const game = (player, computer, gameboard, ship, view) => {
       }
       if (shipPointer === playerShips.length) beginGame();
     };
+  };
+
+  const handleRestart = () => {
+    appView.clear();
+    init();
   };
 
   const computerBoardHandlers = {

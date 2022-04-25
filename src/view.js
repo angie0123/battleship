@@ -115,11 +115,14 @@ export const view = () => {
     status.textContent = message;
   };
 
-  const displayPlayAgain = () => {
+  const displayPlayAgain = (restartHandler) => {
     const boardsContainer = document.querySelector('.boards-container');
     const parent = boardsContainer.parentNode;
     const button = createElement('div', 'play-again', 'hoverable');
     button.textContent = 'Play Again';
+    button.addEventListener('click', () => {
+      restartHandler();
+    });
     parent.insertBefore(button, boardsContainer);
   };
 
